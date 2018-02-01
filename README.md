@@ -3,7 +3,7 @@ This code is offered as-is and is still experimental
 ## Requirements
 * Python 2.7
 * CONTENTdm Host ID
-* CONETNdm Collection ID
+* CONTENTdm Collection ID
 
 ## Instructions
 * Clone the GitHub Repo
