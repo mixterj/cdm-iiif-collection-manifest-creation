@@ -1,4 +1,4 @@
-# CONTENTdm IIIF Collectiom Manifest Creator
+# CONTENTdm IIIF Collection Manifest Creator
 This code is experimental and offered as-is. 
 
 Currently there is not logic to:
