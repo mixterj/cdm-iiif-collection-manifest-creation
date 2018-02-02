@@ -19,6 +19,7 @@ import time
 def main():
     
     global f
+    global collection_blob
     
     # open file for Collection Manifest to be written to
     # TODO: make the file related to the CDM Host and Collection ID
@@ -29,10 +30,21 @@ def main():
     parser.add_argument('-host_id', help='The ID for the CDM host', required=True)
     parser.add_argument('-collection_id', help='The ID for the CDM collection', required=True)
     args = parser.parse_args()
-
     # convert args to variables
     host_id = args.host_id
     collection_id = args.collection_id
+
+    # initialize the collection
+    collection_blob = {}
+    # Since CDM IIIF Collection Manifest have no permanent URIs use a UUID as the URI
+    # THIS SHOULD BE FIXED FOR A PRODUCTION INSTALL SO THE COLLECTIOM MANIFEST URI IS A PERSISTANT LINKED DATA URI
+    collection_uri = 'http://example.com/' + str(uuid.uuid4())
+    collection_blob['@context'] = 'http://iiif.io/api/presentation/2/context.json'
+    collection_blob['@type'] = 'sc:Collection'
+    collection_blob['@id'] = collection_uri
+    collection_blob['label'] = 'IIIF collection of manifests for all compound objects within CONTENTdm collection '+collection_id
+    collection_blob['manifests'] = []
+
     number_of_results = 200
     #set starting loop variables
     starting_record = 1
@@ -48,15 +60,6 @@ def parse_collection(host_id, collection_id, starting_record, number_of_results)
     create_collection(collection_data, host_id, collection_id, starting_record, number_of_results)
     
 def create_collection(collection_data, host_id, collection_id, starting_record, number_of_results):
-    # Create the Collection Manifest
-    collection_blob = {}
-    # Since CDM IIF Collection Manifest have no permanent URIs use a UUID as the URI
-    # THIS SHOULD BE FIXED FOR A PRODUCTION INSTALL SO THE COLLECTIOM MANIFEST URI IS A PERSISTANT LINKED DATA URI
-    collection_uri = str(uuid.uuid4())
-    collection_blob['@context'] = 'http://iiif.io/api/presentation/2/context.json'
-    collection_blob['@type'] = 'sc:Collection'
-    collection_blob['@id'] = collection_uri
-    collection_blob['manifests'] = []
     # Loop through all of the items in the collection and append them to the Manifest list
     for rec in collection_data['records']:
         manifest = {}
