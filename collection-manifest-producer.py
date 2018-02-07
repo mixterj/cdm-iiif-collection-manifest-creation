@@ -65,7 +65,7 @@ def create_collection(collection_data, host_id, collection_id, starting_record, 
         manifest = {}
         item_id = rec['pointer']
         # TODO: Test the resulting Manifest URI to make sure it exists
-        manifest['id'] = 'https://' + host_id + '.contentdm.oclc.org/digital/iiif-info/' + collection_id + '/' + str(item_id) + '/manifest.json'
+        manifest['@id'] = 'https://' + host_id + '.contentdm.oclc.org/digital/iiif-info/' + collection_id + '/' + str(item_id) + '/manifest.json'
         manifest['label'] = rec['title']
         manifest['@type'] = 'sc:Manifest'
         collection_blob['manifests'].append(manifest)
